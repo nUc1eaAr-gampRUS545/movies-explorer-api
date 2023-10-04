@@ -53,6 +53,8 @@ function login(req, res, next) {
             .cookie('jwt', token, {
               maxage: 3600000 * 24 * 7,
               httpOnly: true,
+              secure: true,
+              sameSite: 'none',
             }).json({ message: 'Успешная авторизация.' });
         })
         .catch((err) => {
