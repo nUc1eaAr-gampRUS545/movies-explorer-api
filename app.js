@@ -34,8 +34,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 app.use(requestLogger);
-app.post('/register', validateCreateUser, createUser);
-app.post('/login', validateUserLogin, login);
+app.post('/signup', validateCreateUser, createUser);
+app.post('/signin', validateUserLogin, login);
 app.get('/signout', (req, res) => {
   res.clearCookie('jwt').send({ message: 'Выход' });
 });
