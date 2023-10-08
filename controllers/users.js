@@ -48,7 +48,7 @@ function login(req, res, next) {
           const token = jwt.sign(
             { payload: user._id },
             NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-            { expiresIn: '24h' }
+            { expiresIn: '7d' },
           );
           res
             .cookie('jwt', token, {
