@@ -7,7 +7,7 @@ const cookies = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
 
-const { PORT = 3001, BD_LINK } = process.env;
+const { PORT = 3000, BD_LINK } = process.env;
 const app = express();
 
 const routes = require('./routes/index');
@@ -22,7 +22,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(cookies());
 // app.use(cors({ origin: 'https://mesto-react-app.nomoreparties.co', credentials: true }));
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: ['https://react-movies-app.nomoredomainsrocks.ru','http://localhost:3000'], credentials: true }));
 app.use(express.json());
 
 mongoose.connect(BD_LINK, { useNewUrlParser: true, useUnifiedTopology: false }).then(() => {
