@@ -2,7 +2,7 @@ const Movie = require('../models/movies');
 
 const NotFoundError = require('../utils/errors/not-found-error');
 const ErrorBadRequest = require('../utils/errors/invalid-request');
-const Forbidden = require('../utils/errors/Forbidden');
+
 
 function getMovies(req, res, next) {
   return Movie.find({ owner: req.user.payload })
@@ -56,13 +56,7 @@ function createMovie(req, res, next) {
 function deleteMovie(req, res, next) {
   return Movie.findById(req.params.movieId)
     .orFail(() => new NotFoundError('Карточка по данному id не найдена'))
-    .then((movie) => {
-      if (movie.owner._id.toString() === req.user.payload) {
-        return movie.deleteOne()
-          .then(() => res.send({ message: 'Карточка удалена' }));
-      }
-      return next(new Forbidden('Недостаточно прав для удаления карточки'));
-    })
+    .then((movie) => movie.deleteOne())
     .catch(next);
 }
 
