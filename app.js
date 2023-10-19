@@ -7,7 +7,7 @@ const cookies = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
 
-const { PORT = 3000, BD_LINK } = process.env;
+const { PORT = 3001, BD_LINK } = process.env;
 const app = express();
 
 const routes = require('./routes/index');
@@ -37,7 +37,11 @@ app.use(requestLogger);
 app.post('/signup', validateCreateUser, createUser);
 app.post('/signin', validateUserLogin, login);
 app.get('/signout', (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
+  res.clearCookie('jwt', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+  }).send({ message: 'Выход' });
 });
 app.use('/users', authentiacateUser, routes);
 app.use('/movies', authentiacateUser, routes);

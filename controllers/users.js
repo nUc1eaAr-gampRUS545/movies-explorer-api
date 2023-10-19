@@ -17,9 +17,10 @@ function createUser(req, res, next) {
   } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => userSchema.create({
+      name,
       email,
       password: hash,
-      name,
+
     }).then((user) => res.send({
       name: user.name, email: user.email,
     })))
@@ -82,10 +83,10 @@ function getUserInfo(req, res, next) {
 }
 
 function updateUser(req, res, next) {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
   userSchema.findByIdAndUpdate(
     req.user.payload,
-    { name, about },
+    { name, email },
     { new: true, runValidators: true },
   )
     .then((data) => {
