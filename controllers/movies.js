@@ -3,7 +3,6 @@ const Movie = require('../models/movies');
 const NotFoundError = require('../utils/errors/not-found-error');
 const ErrorBadRequest = require('../utils/errors/invalid-request');
 
-
 function getMovies(req, res, next) {
   return Movie.find({ owner: req.user.payload })
     .then((data) => {
