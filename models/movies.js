@@ -4,11 +4,11 @@ const validator = require('validator');
 const movieSchema = new mongoose.Schema({
   country: {
     type: String,
-    required: true,
+    required: false,
   },
   director: {
     type: String,
-    required: true,
+    required: false,
   },
   duration: {
     type: Number,
@@ -16,7 +16,7 @@ const movieSchema = new mongoose.Schema({
   },
   year: {
     type: String,
-    required: true,
+    required: false,
   },
   description: {
     type: String,
@@ -27,14 +27,6 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   trailerLink: {
-    type: String,
-    required: true,
-    validate: {
-      validator: (url) => validator.isURL(url),
-      message: 'Некорректный адрес URL',
-    },
-  },
-  thumbnail: {
     type: String,
     required: true,
     validate: {

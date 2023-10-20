@@ -7,7 +7,7 @@ const cookies = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
 
-const { PORT = 3000, BD_LINK } = process.env;
+const { PORT = 3001, BD_LINK } = process.env;
 const app = express();
 
 const routes = require('./routes/index');
