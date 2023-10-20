@@ -53,10 +53,20 @@ function createMovie(req, res, next) {
 }
 
 function deleteMovie(req, res, next) {
-  return Movie.findById(req.params.movieId)
-    .orFail(() => new NotFoundError('Карточка по данному id не найдена'))
-    .then((movie) => movie.deleteOne())
-    .catch(next);
+  const owner = req.user.payload;
+  const { movieId } = req.params;
+  Movie.findById(movieId)
+    .then((movie) => {
+      if (movie.owner !== owner) {
+        next(new ErrorBadRequest('Неверное тело запроса'));
+      } else {
+        Movie.deleteOne()
+          .then((deletedMovie) => {
+            res.status(200).send({ data: deletedMovie });
+          })
+          .catch(next);
+      }
+    }).catch(next);
 }
 
 module.exports = {
